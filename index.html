@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello React</title>
+    <!-- Not present in the tutorial. Just for basic styling. -->
+    <!-- <link rel="stylesheet" href="css/base.css" /> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script type="text/jsx;harmony=true">
+		var SearchableNotesTable = React.createClass({
+			render: function() {
+				return (
+					<div className="searchableNotesTable">
+						<SearchBar />
+						<NoteList notes={this.props.notes} />
+					</div>
+				);
+			}
+		});
+
+		var SearchBar = React.createClass({
+			render: function() {
+				return (
+					<input type="text" placeholder="Enter search terms..." ref="terms" />
+				);
+			}
+		})
+
+		var NoteList = React.createClass({
+			render: function() {
+				var notes = this.props.notes.map(function(note, index) {
+					return (
+						<Note date={note.date}>
+							{note.text}
+						</Note>
+					);
+				});
+				return (
+					<div className="noteList">
+						{notes}
+					</div>
+				);
+			}
+		})
+
+		var Note = React.createClass({
+			render: function() {
+				return (
+					<div className="note">
+						<h3>{this.props.date}</h3>
+						{this.props.children.toString()}
+					</div>
+				);
+			}
+		});
+		var notes = [
+			{'date': '20140202', 'text': 'React is a JavaScript library for building user interfaces.'},
+			{'date': '20150606', 'text': 'Just the UI: Lots of people use React as the V in MVC. Since React makes no assumptions about the rest of your technology stack, it\'s easy to try it out on a small feature in an existing project.'}
+		]
+
+		React.render(
+			<SearchableNotesTable notes={notes} />,
+			document.getElementById('content')
+		);
+    </script>
+  </body>
+</html>
